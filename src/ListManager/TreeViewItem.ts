@@ -61,7 +61,7 @@ export class TreeViewItem extends Actor<TreeViewItemProps> {
         e.stopPropagation();
 
         navigator.clipboard.writeText(
-          `actor("${this.props.actor.managedObjectId}")`
+          `actorGivenId("${this.props.actor.managedObjectId}")`
         );
       })
     );
@@ -146,6 +146,7 @@ export class TreeViewItem extends Actor<TreeViewItemProps> {
 }
 
 const WrapperStyle = ElementStyle.givenDefinition({
+  elementDescription: "TreeViewItem",
   css: `
     margin-bottom: 3px;
     opacity: 0.4;
@@ -160,6 +161,7 @@ const WrapperStyle = ElementStyle.givenDefinition({
 });
 
 const LabelStyle = ElementStyle.givenDefinition({
+  elementDescription: "Label",
   css: `
     align-items: center;
     background: #2C343A;
@@ -219,6 +221,7 @@ const LabelStyle = ElementStyle.givenDefinition({
 });
 
 const ChildAreaStyle = ElementStyle.givenDefinition({
+  elementDescription: "ChildArea",
   css: `
     display: none;
     padding: 1px 12px;
@@ -231,6 +234,7 @@ const ChildAreaStyle = ElementStyle.givenDefinition({
 });
 
 const ArrowStyle = ElementStyle.givenDefinition({
+  elementDescription: "Arrow",
   css: `
     background-image: url(${rightArrow});
     background-position: center;

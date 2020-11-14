@@ -11,10 +11,6 @@ export interface ListManagerProps {
   parentElement: HTMLElement;
 }
 
-(window as any).actor = (actorId: string): Actor => {
-  return Actor.activeSet.toArray().find((actor) => actor.actorId === actorId);
-};
-
 export class ListManager extends Actor<ListManagerProps> {
   static ignoredSet = new Set<string>();
 
@@ -100,6 +96,8 @@ export class ListManager extends Actor<ListManagerProps> {
     const rootObjects = ObservableArray.ofEmpty<Actor>();
     this.cancelOnDeactivate(
       Actor.rootSet.didChange.subscribe((actors) => {
+        console.log("root set", actors);
+
         const filteredActors = actors.filter(
           (actor) => !ListManager.ignoredSet.has(actor.actorId)
         );
@@ -142,6 +140,7 @@ export class ListManager extends Actor<ListManagerProps> {
 }
 
 const WrapperStyle = ElementStyle.givenDefinition({
+  elementDescription: "ListManager",
   css: `
     bottom: 0;
     left: 0;
@@ -156,6 +155,7 @@ const WrapperStyle = ElementStyle.givenDefinition({
 const transition = "0.5s cubic-bezier(.03,.9,.5,.98)";
 
 const ListStyle = ElementStyle.givenDefinition({
+  elementDescription: "List",
   css: `
     background: #22272BFC;
     bottom: 0;
@@ -179,6 +179,7 @@ const ListStyle = ElementStyle.givenDefinition({
 });
 
 const SidebarStyle = ElementStyle.givenDefinition({
+  elementDescription: "Sidebar",
   css: `
     background: #374148FC;
     top: 0;
@@ -205,6 +206,7 @@ const SidebarStyle = ElementStyle.givenDefinition({
 });
 
 const MenuStyle = ElementStyle.givenDefinition({
+  elementDescription: "Menu",
   css: `
     background: #16191CFC;
     top: 0;

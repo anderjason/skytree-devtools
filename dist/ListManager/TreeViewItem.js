@@ -21,6 +21,12 @@ class TreeViewItem extends skytree_1.Actor {
             tagName: "div",
             parentElement: wrapper.element,
         })));
+        this.cancelOnDeactivate(label.addManagedEventListener("click", () => {
+            this.props.selectedActor.setValue(this.props.actor);
+            if (hasChildren.value == true) {
+                this._isExpanded.setValue(!this.isExpanded.value);
+            }
+        }));
         const objectIdSpan = this.addActor(_1.ListManager.ignoreActor(web_1.ManagedElement.givenDefinition({
             tagName: "span",
             parentElement: label.element,
@@ -30,20 +36,26 @@ class TreeViewItem extends skytree_1.Actor {
         this.cancelOnDeactivate(objectIdSpan.addManagedEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
-            navigator.clipboard.writeText(`mo("${this.props.actor.managedObjectId}")`);
+            navigator.clipboard.writeText(`actorGivenId("${this.props.actor.managedObjectId}")`);
         }));
         const arrowDiv = this.addActor(_1.ListManager.ignoreActor(ArrowStyle.toManagedElement({
             tagName: "div",
             parentElement: label.element,
         })));
-        const nameSpan = document.createElement("strong");
-        nameSpan.innerHTML = this.props.actor.constructor.name;
-        label.element.appendChild(nameSpan);
-        this.cancelOnDeactivate(label.addManagedEventListener("click", () => {
-            if (hasChildren.value == true) {
-                this._isExpanded.setValue(!this.isExpanded.value);
-            }
-        }));
+        if (this.props.actor.actorDescription != null) {
+            const descriptionSpan = document.createElement("strong");
+            descriptionSpan.innerHTML = this.props.actor.actorDescription;
+            label.element.appendChild(descriptionSpan);
+            const nameSpan = document.createElement("span");
+            nameSpan.className = "smallname";
+            nameSpan.innerHTML = this.props.actor.constructor.name;
+            label.element.appendChild(nameSpan);
+        }
+        else {
+            const nameSpan = document.createElement("strong");
+            nameSpan.innerHTML = this.props.actor.constructor.name;
+            label.element.appendChild(nameSpan);
+        }
         const childArea = this.addActor(_1.ListManager.ignoreActor(ChildAreaStyle.toManagedElement({
             tagName: "div",
             parentElement: wrapper.element,
@@ -70,6 +82,7 @@ class TreeViewItem extends skytree_1.Actor {
                 return _1.ListManager.ignoreActor(new TreeViewItem({
                     parentElement: childArea.element,
                     actor: childActor,
+                    selectedActor: this.props.selectedActor,
                 }));
             },
         })));
@@ -77,6 +90,7 @@ class TreeViewItem extends skytree_1.Actor {
 }
 exports.TreeViewItem = TreeViewItem;
 const WrapperStyle = web_1.ElementStyle.givenDefinition({
+    elementDescription: "TreeViewItem",
     css: `
     margin-bottom: 3px;
     opacity: 0.4;
@@ -90,6 +104,7 @@ const WrapperStyle = web_1.ElementStyle.givenDefinition({
     },
 });
 const LabelStyle = web_1.ElementStyle.givenDefinition({
+    elementDescription: "Label",
     css: `
     align-items: center;
     background: #2C343A;
@@ -105,6 +120,11 @@ const LabelStyle = web_1.ElementStyle.givenDefinition({
 
     strong {
       margin-right: 1rem;
+    }
+
+    .smallname {
+      font-size: 11px;
+      opacity: 0.5;
     }
 
     .objid {
@@ -143,6 +163,7 @@ const LabelStyle = web_1.ElementStyle.givenDefinition({
     },
 });
 const ChildAreaStyle = web_1.ElementStyle.givenDefinition({
+    elementDescription: "ChildArea",
     css: `
     display: none;
     padding: 1px 12px;
@@ -154,6 +175,7 @@ const ChildAreaStyle = web_1.ElementStyle.givenDefinition({
     },
 });
 const ArrowStyle = web_1.ElementStyle.givenDefinition({
+    elementDescription: "Arrow",
     css: `
     background-image: url(${rightArrow});
     background-position: center;

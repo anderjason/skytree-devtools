@@ -12,6 +12,7 @@ class ListManager extends skytree_1.Actor {
     }
     onActivate() {
         ListManager.ignoreActor(this);
+        const selectedActor = observable_1.Observable.ofEmpty(observable_1.Observable.isStrictEqual);
         const wrapper = this.addActor(ListManager.ignoreActor(WrapperStyle.toManagedElement({
             tagName: "div",
             parentElement: this.props.parentElement,
@@ -28,10 +29,36 @@ class ListManager extends skytree_1.Actor {
             tagName: "div",
             parentElement: wrapper.element,
         })));
+        this.cancelOnDeactivate(selectedActor.didChange.subscribe((actor) => {
+            sidebar.element.innerHTML = "";
+            if (actor == null ||
+                actor.props == null ||
+                typeof actor.props !== "object") {
+                return;
+            }
+            const title = document.createElement("h3");
+            title.innerHTML = actor.actorId;
+            sidebar.element.appendChild(title);
+            Object.keys(actor.props).forEach((key) => {
+                const div = document.createElement("div");
+                let value = actor.props[key];
+                if (observable_1.Observable.isObservable(value)) {
+                    value = value.value;
+                }
+                else if (observable_1.ObservableArray.isObservableArray(value)) {
+                    value = "[]";
+                }
+                else if (observable_1.ObservableSet.isObservableSet(value)) {
+                    value = "Set";
+                }
+                div.innerHTML = `${key}: ${value}`;
+                sidebar.element.appendChild(div);
+            });
+        }, true));
         const rootObjects = observable_1.ObservableArray.ofEmpty();
         this.cancelOnDeactivate(skytree_1.Actor.rootSet.didChange.subscribe((actors) => {
+            console.log("root set", actors);
             const filteredActors = actors.filter((actor) => !ListManager.ignoredSet.has(actor.actorId));
-            console.log(filteredActors);
             rootObjects.sync(filteredActors);
         }, true));
         this.addActor(new skytree_1.ArrayActivator({
@@ -40,6 +67,7 @@ class ListManager extends skytree_1.Actor {
                 return ListManager.ignoreActor(new TreeViewItem_1.TreeViewItem({
                     parentElement: list.element,
                     actor,
+                    selectedActor,
                 }));
             },
         }));
@@ -57,6 +85,7 @@ class ListManager extends skytree_1.Actor {
 exports.ListManager = ListManager;
 ListManager.ignoredSet = new Set();
 const WrapperStyle = web_1.ElementStyle.givenDefinition({
+    elementDescription: "ListManager",
     css: `
     bottom: 0;
     left: 0;
@@ -69,6 +98,7 @@ const WrapperStyle = web_1.ElementStyle.givenDefinition({
 });
 const transition = "0.5s cubic-bezier(.03,.9,.5,.98)";
 const ListStyle = web_1.ElementStyle.givenDefinition({
+    elementDescription: "List",
     css: `
     background: #22272BFC;
     bottom: 0;
@@ -82,6 +112,7 @@ const ListStyle = web_1.ElementStyle.givenDefinition({
     box-sizing: border-box;
     transform: translate(calc(100% + 30vw), 0);
     transition: ${transition} transform;
+    overflow-y: auto;
   `,
     modifiers: {
         isVisible: `
@@ -90,6 +121,7 @@ const ListStyle = web_1.ElementStyle.givenDefinition({
     },
 });
 const SidebarStyle = web_1.ElementStyle.givenDefinition({
+    elementDescription: "Sidebar",
     css: `
     background: #374148FC;
     top: 0;
@@ -101,6 +133,12 @@ const SidebarStyle = web_1.ElementStyle.givenDefinition({
     z-index: 102;
     transform: translate(100%, 0);
     transition: ${transition} transform;
+    font-family: monospace;
+    white-space: pre-wrap;
+    overflow: hidden;
+    color: #FFF;
+    padding: 20px;
+    line-height: 1.5;
   `,
     modifiers: {
         isVisible: `
@@ -109,6 +147,7 @@ const SidebarStyle = web_1.ElementStyle.givenDefinition({
     },
 });
 const MenuStyle = web_1.ElementStyle.givenDefinition({
+    elementDescription: "Menu",
     css: `
     background: #16191CFC;
     top: 0;
