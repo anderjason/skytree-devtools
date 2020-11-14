@@ -94,6 +94,7 @@ const WrapperStyle = web_1.ElementStyle.givenDefinition({
     top: 0;
     overflow: hidden;
     z-index: 2000;
+    pointer-events: none;
   `,
 });
 const transition = "0.5s cubic-bezier(.03,.9,.5,.98)";
@@ -113,6 +114,7 @@ const ListStyle = web_1.ElementStyle.givenDefinition({
     transform: translate(calc(100% + 30vw), 0);
     transition: ${transition} transform;
     overflow-y: auto;
+    pointer-events: auto;
   `,
     modifiers: {
         isVisible: `

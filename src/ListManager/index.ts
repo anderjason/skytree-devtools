@@ -149,6 +149,7 @@ const WrapperStyle = ElementStyle.givenDefinition({
     top: 0;
     overflow: hidden;
     z-index: 2000;
+    pointer-events: none;
   `,
 });
 
@@ -170,6 +171,7 @@ const ListStyle = ElementStyle.givenDefinition({
     transform: translate(calc(100% + 30vw), 0);
     transition: ${transition} transform;
     overflow-y: auto;
+    pointer-events: auto;
   `,
   modifiers: {
     isVisible: `
