@@ -173,7 +173,7 @@ const ListStyle = ElementStyle.givenDefinition({
     width: 67vw;
     z-index: 101;
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 750px) {
       right: 0;
       top: 3vh;
       width: 100%;
@@ -208,7 +208,7 @@ const SidebarStyle = ElementStyle.givenDefinition({
     padding: 20px;
     line-height: 1.5;
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 750px) {
       right: 0;
       top: 70vh;
       width: 100%;
@@ -237,7 +237,7 @@ const MenuStyle = ElementStyle.givenDefinition({
     transform: translate(calc(100% + 97vw), 0);
     transition: ${transition} transform;
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 750px) {
       right: 0;
       top: 0;
       width: 100%;

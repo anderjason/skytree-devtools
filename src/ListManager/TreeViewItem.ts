@@ -215,7 +215,7 @@ const LabelStyle = ElementStyle.givenDefinition({
       }
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 750px) {
       flex-direction: column;
       align-items: flex-start;
       padding-left: 20px;
@@ -267,7 +267,7 @@ const ArrowStyle = ElementStyle.givenDefinition({
     width: 20px;
     will-change: opacity, transform;
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 750px) {
       position: absolute;
       left: 1px;
       top: 24px;
