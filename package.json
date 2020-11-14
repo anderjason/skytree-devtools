@@ -1,0 +1,45 @@
+{
+  "name": "skytree-devtools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:anderjason/skytree-devtools.git"
+  },
+  "author": "Jason Anderson",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf dist && rm -rf test",
+    "test": "tsc -p tsconfig.test.json && node test/index.test && rm -rf test",
+    "examples": "webpack-dev-server --config ./examples/webpack.config.js --open",
+    "build:examples": "webpack --config ./examples/webpack.build.js"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "dependencies": {
+    "@anderjason/observable": "^3.2.0",
+    "@anderjason/tests": "^1.0.1",
+    "@anderjason/time": "^2.0.2",
+    "@anderjason/util": "^2.0.3",
+    "skytree": "git+https://github.com/anderjason/skytree.git"
+  },
+  "devDependencies": {
+    "@anderjason/example-tools": "git+https://github.com/anderjason/example-tools.git",
+    "@types/fontfaceobserver": "0.0.6",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "ts-loader": "^8.0.5",
+    "typescript": "^4.0.5",
+    "webpack": "4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "bugs": {
+    "url": "https://github.com/anderjason/skytree-devtools/issues"
+  },
+  "homepage": "https://github.com/anderjason/skytree-devtools#readme"
+}
