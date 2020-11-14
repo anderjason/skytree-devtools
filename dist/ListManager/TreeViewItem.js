@@ -5,11 +5,13 @@ const observable_1 = require("@anderjason/observable");
 const web_1 = require("@anderjason/web");
 const skytree_1 = require("skytree");
 const _1 = require(".");
-const rightArrow = `
+const rightArrowSvg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="123.958" height="123.959">
 	<path d="M38.217 1.779c-3.8-3.8-10.2-1.1-10.2 4.2v112c0 5.3 6.4 8 10.2 4.2l56-56c2.3-2.301 2.3-6.101 0-8.401l-56-55.999z" fill="#FFF" />
 </svg>
 `;
+let blob = new Blob([rightArrowSvg], { type: "image/svg+xml" });
+let rightArrow = URL.createObjectURL(blob);
 class TreeViewItem extends skytree_1.Actor {
     constructor() {
         super(...arguments);
@@ -100,6 +102,8 @@ const WrapperStyle = web_1.ElementStyle.givenDefinition({
     opacity: 0.4;
     transition: 0.3s ease opacity;
     will-change: opacity;
+    overflow: hidden;
+    position: relative;
   `,
     modifiers: {
         isTargetActive: `
@@ -129,6 +133,8 @@ const LabelStyle = web_1.ElementStyle.givenDefinition({
     .smallname {
       font-size: 11px;
       opacity: 0.5;
+      padding: 3px 0 0 0;
+      display: block;
     }
 
     .objid {
@@ -149,6 +155,16 @@ const LabelStyle = web_1.ElementStyle.givenDefinition({
     &:hover {
       .objid {
         opacity: 0.5;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 20px;
+
+      .objid {
+        padding: 3px 0;
       }
     }
   `,
@@ -191,6 +207,12 @@ const ArrowStyle = web_1.ElementStyle.givenDefinition({
     transition: 0.15s ease all;
     width: 20px;
     will-change: opacity, transform;
+
+    @media screen and (max-width: 600px) {
+      position: absolute;
+      left: 1px;
+      top: 24px;
+    }
   `,
     modifiers: {
         isExpanded: `

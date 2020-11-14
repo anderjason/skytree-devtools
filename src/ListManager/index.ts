@@ -160,18 +160,26 @@ const ListStyle = ElementStyle.givenDefinition({
   css: `
     background: #22272BFC;
     bottom: 0;
+    box-sizing: border-box;
     font-size: 14px;
+    overflow-y: auto;
     padding: 12px;
+    pointer-events: auto;
     position: absolute;
     right: 30vw;
     top: 0;
-    width: 67vw;
-    z-index: 101;
-    box-sizing: border-box;
     transform: translate(calc(100% + 30vw), 0);
     transition: ${transition} transform;
-    overflow-y: auto;
-    pointer-events: auto;
+    width: 67vw;
+    z-index: 101;
+
+    @media screen and (max-width: 600px) {
+      right: 0;
+      top: 3vh;
+      width: 100%;
+      height: 67vh;
+      transform: translate(100%, 0);
+    }
   `,
   modifiers: {
     isVisible: `
@@ -199,6 +207,14 @@ const SidebarStyle = ElementStyle.givenDefinition({
     color: #FFF;
     padding: 20px;
     line-height: 1.5;
+
+    @media screen and (max-width: 600px) {
+      right: 0;
+      top: 70vh;
+      width: 100%;
+      height: 30vh;
+      transform: translate(100%, 0);
+    }
   `,
   modifiers: {
     isVisible: `
@@ -220,6 +236,14 @@ const MenuStyle = ElementStyle.givenDefinition({
     z-index: 100;
     transform: translate(calc(100% + 97vw), 0);
     transition: ${transition} transform;
+
+    @media screen and (max-width: 600px) {
+      right: 0;
+      top: 0;
+      width: 100%;
+      height: 3vh;
+      transform: translate(100%, 0);
+    }
   `,
   modifiers: {
     isVisible: `
