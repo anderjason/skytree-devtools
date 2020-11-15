@@ -106,9 +106,14 @@ export class TreeViewItem extends Actor<TreeViewItemProps> {
     );
 
     this.cancelOnDeactivate(
+      this.props.selectedActor.didChange.subscribe((selectedActor) => {
+        label.setModifier("isSelected", selectedActor === this.props.actor);
+      }, true)
+    );
+
+    this.cancelOnDeactivate(
       this.isExpanded.didChange.subscribe((isExpanded) => {
         arrowDiv.setModifier("isExpanded", isExpanded);
-        label.setModifier("isExpanded", isExpanded);
         childArea.setModifier("isExpanded", isExpanded);
       }, true)
     );
@@ -172,7 +177,8 @@ const LabelStyle = ElementStyle.givenDefinition({
   elementDescription: "Label",
   css: `
     align-items: center;
-    background: #2C343A;
+    background: #39354C;
+    border: 2px solid transparent;
     border-radius: 2px;
     color: white;
     display: flex;
@@ -180,7 +186,6 @@ const LabelStyle = ElementStyle.givenDefinition({
     letter-spacing: 0.2px;
     margin-bottom: 2px;
     padding: 7px;
-    transition: 0.2s ease background;
     user-select: none;
 
     strong {
@@ -227,15 +232,11 @@ const LabelStyle = ElementStyle.givenDefinition({
   `,
   modifiers: {
     hasChildren: `
-      background: #39354C;
+      background: #484265;
       cursor: pointer;
-    
-      &:hover {
-        background: #484265;
-      }
     `,
-    isExpanded: `
-      background: #4b4d79;
+    isSelected: `
+      border-color: #83bce4;
     `,
   },
 });

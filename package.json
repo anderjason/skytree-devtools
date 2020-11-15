@@ -25,7 +25,7 @@
     "@anderjason/tests": "^1.0.1",
     "@anderjason/time": "^2.0.2",
     "@anderjason/util": "^2.0.3",
-    "skytree": "git+https://github.com/anderjason/skytree.git"
+    "skytree": "^9.3.0"
   },
   "devDependencies": {
     "@anderjason/example-tools": "git+https://github.com/anderjason/example-tools.git",
