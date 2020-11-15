@@ -25,6 +25,7 @@
     "@anderjason/tests": "^1.0.1",
     "@anderjason/time": "^2.0.2",
     "@anderjason/util": "^2.0.3",
+    "@anderjason/web": "^6.2.3",
     "skytree": "^9.3.0"
   },
   "devDependencies": {
