@@ -57,7 +57,6 @@ class ListManager extends skytree_1.Actor {
         }, true));
         const rootObjects = observable_1.ObservableArray.ofEmpty();
         this.cancelOnDeactivate(skytree_1.Actor.rootSet.didChange.subscribe((actors) => {
-            console.log("root set", actors);
             const filteredActors = actors.filter((actor) => !ListManager.ignoredSet.has(actor.actorId));
             rootObjects.sync(filteredActors);
         }, true));

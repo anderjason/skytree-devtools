@@ -96,8 +96,6 @@ export class ListManager extends Actor<ListManagerProps> {
     const rootObjects = ObservableArray.ofEmpty<Actor>();
     this.cancelOnDeactivate(
       Actor.rootSet.didChange.subscribe((actors) => {
-        console.log("root set", actors);
-
         const filteredActors = actors.filter(
           (actor) => !ListManager.ignoredSet.has(actor.actorId)
         );
